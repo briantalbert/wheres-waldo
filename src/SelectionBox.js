@@ -33,18 +33,19 @@ export default function SelectionBox(props) {
         const hitBox = coordsList[0][clickedThing];
         //hitbox is an array, pixel coordinates are [top, bottom, left, right].
         //if click is between top and bottom and left and right then it's good.
-        checkHit(hitBox);
+        checkHit(hitBox, clickedThing);
     }
 
-    function checkHit(hitBox) {
+    function checkHit(hitBox, target) {
         const clickX = props.clickCoords[0];
         const clickY = props.clickCoords[1];
-
-        if (clickX >= hitBox[2] && 
-            clickX <= hitBox[3] &&
-            clickY >= hitBox[0] &&
-            clickY <= hitBox[1]) {
+        const [top, bottom, left, right] = hitBox;
+        if (clickX >= left && 
+            clickX <= right &&
+            clickY >= top &&
+            clickY <= bottom) {
                 console.log('CORRECT!');
+                setThings(current => current.filter(thing => thing != target))
             } else {
                 console.log('WRONG!');
             }
